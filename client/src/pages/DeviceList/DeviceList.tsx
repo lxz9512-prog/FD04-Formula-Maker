@@ -202,7 +202,7 @@ const DeviceList: React.FC = () => {
               >
                 <Image
                   src={DEVICE_IMAGE_URL}
-                  alt="FD06"
+                  alt="FD04"
                   className="h-[65px] w-[55px] object-contain"
                 />
               </div>
@@ -214,7 +214,7 @@ const DeviceList: React.FC = () => {
                     className="text-[18px]"
                     style={{ color: '#7a3d17', fontWeight: 600 }}
                   >
-                    FD06
+                    FD04
                   </span>
                   <ChevronRight
                     className="h-5 w-5"

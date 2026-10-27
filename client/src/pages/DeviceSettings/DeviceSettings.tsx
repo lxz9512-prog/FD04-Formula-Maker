@@ -198,7 +198,7 @@ const DeviceSettings: React.FC = () => {
                 <div className="h-[44px] w-[44px] overflow-hidden rounded-lg">
                   <Image
                     src={DEVICE_THUMBNAIL}
-                    alt="FD06"
+                    alt="FD04"
                     className="h-full w-full object-cover"
                   />
                 </div>
@@ -207,7 +207,7 @@ const DeviceSettings: React.FC = () => {
                     className="text-[15px] font-medium"
                     style={{ color: '#1A1A1A' }}
                   >
-                    FD06
+                    FD04
                   </p>
                 </div>
               </div>

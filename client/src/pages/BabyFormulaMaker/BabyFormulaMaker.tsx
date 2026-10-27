@@ -318,6 +318,17 @@ const BabyFormulaMaker: React.FC<BabyFormulaMakerProps> = ({
   const waterStale =
     dayjs().diff(dayjs(deviceData.lastWaterRefill), 'hour') >= 24;
   const waterQualityLevel = getWaterQualityLevel(deviceData.waterTds);
+  // Tank level shown as three coarse steps (low / mid / high) instead of an exact volume.
+  const waterLevelRatio =
+    deviceData.waterCapacity > 0
+      ? deviceData.waterAmount / deviceData.waterCapacity
+      : 0;
+  const waterLevel: 'low' | 'mid' | 'high' =
+    waterLevelRatio < 0.3 ? 'low' : waterLevelRatio < 0.7 ? 'mid' : 'high';
+  const waterLevelLabel =
+    language === 'zh'
+      ? { low: '低', mid: '中', high: '高' }[waterLevel]
+      : { low: 'Low', mid: 'Mid', high: 'High' }[waterLevel];
   const resourceWarnings = getResourceWarnings(deviceData.waterAmount, deviceData.powderAmount, waterQualityLevel, mixingChamberCount);
   const showPowderCleanReminder =
     mixingChamberCount === 6 && dismissedChamberCount !== mixingChamberCount;
@@ -927,82 +938,14 @@ const BabyFormulaMaker: React.FC<BabyFormulaMakerProps> = ({
               className="control-device object-contain"
             />
 
-            <div className="control-resources">
-              {/* Mixing Chamber Indicator */}
-              <div className="resource-chamber min-w-0" data-blocked={mixingChamberBlocked} data-warning={resourceWarnings.chamber} data-alarm={resourceAlarms.chamber}>
-                <motion.button
-                  whileTap={{ scale: 0.92 }}
-                  aria-expanded={resourcePopup === 'powder'}
-                  aria-label={`${t('maker.mixingChamber')}: ${mixingChamberCount}`}
-                  aria-controls="resource-detail-panel"
-                  onClick={(event) => toggleResourcePopup('powder', event.currentTarget)}
-                  className="relative flex h-[70px] w-full flex-col items-center justify-center gap-0.5 rounded-[14px] px-1.5"
-                  style={{
-                    background: 'white',
-                    boxShadow:
-                      resourcePopup === 'powder'
-                        ? 'inset 0 0 0 1.5px #C4956A, 4px 4px 10px hsl(330 10% 85% / 0.25)'
-                        : mixingChamberBlocked
-                          ? '4px 4px 10px hsl(0 80% 85% / 0.4), -4px -4px 10px hsl(0 0% 100% / 0.8)'
-                          : '4px 4px 10px hsl(330 10% 85% / 0.3), -4px -4px 10px hsl(0 0% 100% / 0.8)',
-                  }}
-                >
-                  <SlidersHorizontal
-                    className="h-4 w-4"
-                    style={{
-                      color: mixingChamberBlocked ? '#DC2626' : '#C4956A',
-                    }}
-                  />
-                  <span className="text-[9px]" style={{ color: '#999497' }}>
-                    {t('maker.mixingChamber')}
-                  </span>
-                  <span
-                    className="text-[11px] font-bold"
-                    style={{
-                      color: mixingChamberBlocked ? '#DC2626' : '#221122',
-                    }}
-                  >
-                    {mixingChamberCount}
-                  </span>
-                </motion.button>
-              </div>
-
-              {/* Formula Can Indicator */}
-              <motion.button
-                whileTap={{ scale: 0.92 }}
-                aria-expanded={resourcePopup === 'formula'}
-                aria-label={`${t('maker.formulaCan')}: ${Math.round(deviceData.powderAmount)} g`}
-                aria-controls="resource-detail-panel"
-                onClick={(event) => toggleResourcePopup('formula', event.currentTarget)}
-                className="resource-formula relative flex h-[70px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-[14px] bg-white px-1"
-                data-warning={resourceWarnings.formula}
-                data-alarm={resourceAlarms.formula}
-                style={{
-                  boxShadow:
-                    resourcePopup === 'formula'
-                      ? 'inset 0 0 0 1.5px #C4956A, 4px 4px 10px hsl(330 10% 85% / 0.25)'
-                      : '4px 4px 10px hsl(330 10% 85% / 0.3), -4px -4px 10px hsl(0 0% 100% / 0.8)',
-                }}
-              >
-                <Milk className="h-4 w-4" style={{ color: '#8B4A1B' }} />
-                <span className="text-[9px]" style={{ color: '#999497' }}>
-                  {t('maker.formulaCan')}
-                </span>
-                <span
-                  className="text-[11px] font-bold leading-tight"
-                  style={{ color: '#221122' }}
-                >
-                  {Math.round(deviceData.powderAmount)} g
-                </span>
-              </motion.button>
-
+            <div className="control-resources control-resources--single">
               {/* Water Level Indicator */}
               <div className="resource-water min-w-0" data-warning={resourceWarnings.water} data-alarm={resourceAlarms.water}>
                 <motion.button
                   whileTap={{ scale: 0.92 }}
                   aria-expanded={resourcePopup === 'water' && resourceTrigger?.dataset.resource === 'water'}
                   data-resource="water"
-                  aria-label={`${t('maker.waterTank')}: ${formatVolumeFromMl(deviceData.waterAmount * 1000, unit)}`}
+                  aria-label={`${t('maker.waterTank')}: ${waterLevelLabel}`}
                   aria-controls="resource-detail-panel"
                   onClick={(event) => toggleResourcePopup('water', event.currentTarget)}
                   className="relative flex h-[70px] w-full flex-col items-center justify-center gap-0.5 rounded-[14px] px-1.5"
@@ -1019,26 +962,26 @@ const BabyFormulaMaker: React.FC<BabyFormulaMakerProps> = ({
                     {t('maker.waterTank')}
                   </span>
                   <span
-                    className="text-[11px] font-bold"
-                    style={{ color: '#221122' }}
+                    className="water-level-gauge"
+                    role="img"
+                    aria-label={waterLevelLabel}
                   >
-                    {formatVolumeFromMl(deviceData.waterAmount * 1000, unit)}
+                    {([
+                      ['low', language === 'zh' ? '低' : 'Low'],
+                      ['mid', language === 'zh' ? '中' : 'Mid'],
+                      ['high', language === 'zh' ? '高' : 'High'],
+                    ] as const).map(([key, label]) => (
+                      <span
+                        key={key}
+                        className="water-level-seg"
+                        data-active={waterLevel === key}
+                      >
+                        {label}
+                      </span>
+                    ))}
                   </span>
                 </motion.button>
               </div>
-              <button
-                className="resource-quality"
-                data-warning={resourceWarnings.quality}
-                data-alarm={resourceAlarms.quality}
-                aria-label={`${t('maker.waterQualityTds')}: ${resourceQualityLabel}`}
-                aria-expanded={resourcePopup === 'water' && resourceTrigger?.dataset.resource === 'quality'}
-                data-resource="quality"
-                aria-controls="resource-detail-panel"
-                onClick={(event) => toggleResourcePopup('water', event.currentTarget)}
-              >
-                <span className="tds-icon"><Shield /><small>TDS</small></span>
-                <strong>{resourceQualityLabel}</strong>
-              </button>
             </div>
 
             <AnimatePresence initial={false} mode="wait">

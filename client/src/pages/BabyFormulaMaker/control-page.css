@@ -24,6 +24,11 @@
 .control-hero { padding-top: 6px; padding-bottom: 11px; }
 .control-device { height: 186px; width: 181px; background: none; }
 .control-resources { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 300px; gap: 12px; margin: 9px auto 0; padding-inline: 8px; color: #696764; }
+.control-resources--single { justify-content: center; }
+/* Water tank level: 3 horizontal steps, the active step marks the current level. */
+.control-resources .water-level-gauge { display: flex; align-items: center; gap: 3px; }
+.control-resources .water-level-gauge > .water-level-seg { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 18px; padding: 0 6px; border-radius: 6px; background: #efeced; color: #8d858a; font-size: 10px; font-weight: 500; line-height: 1; }
+.control-resources .water-level-gauge > .water-level-seg[data-active='true'] { background: #5B9BD5; color: #ffffff; font-weight: 600; }
 .control-resources > * { flex: 0 0 auto; }
 .resource-water { order: 0; }
 .resource-formula { order: 1; }

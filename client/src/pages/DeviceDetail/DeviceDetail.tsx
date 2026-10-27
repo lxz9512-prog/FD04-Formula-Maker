@@ -48,7 +48,7 @@ const DetailRow: React.FC<DetailRowProps> = ({
 const DeviceDetail: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [deviceName, setDeviceName] = useState('FD06');
+  const [deviceName, setDeviceName] = useState('FD04');
   const [showEditName, setShowEditName] = useState(false);
   const [editName, setEditName] = useState(deviceName);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -131,7 +131,7 @@ const DeviceDetail: React.FC = () => {
             <div className="mx-4 border-b border-[#EEEEEE]" />
             <DetailRow
               label={t('deviceDetail.serialNumber')}
-              value="FD06-2025-00381"
+              value="FD04-2025-00381"
             />
           </div>
         </div>
