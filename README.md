@@ -1,5 +1,8 @@
 # FD06 Formula Maker Demo
 
+> **接手 / 部署请先看 [HANDOVER.md](./HANDOVER.md)**：仓库分支拓扑、构建部署四步、本轮改动记录、已知限制与踩坑清单都在里面。
+> 注意：本仓库 `main` 为源码、`gh-pages` 为构建产物并作为 GitHub Pages 源；线上演示地址 <https://lxz9512-prog.github.io/FD04-Formula-Maker/>。
+
 ## 项目简介
 
 FD06 Formula Maker Demo 是一套智能调奶器前端交互原型，用于产品方案演示、页面评审和交互流程验证。
