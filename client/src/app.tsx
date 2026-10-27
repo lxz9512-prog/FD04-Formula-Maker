@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound/NotFound';
 import BabyFormulaMaker from './pages/BabyFormulaMaker/BabyFormulaMaker';
 import DeviceList from './pages/DeviceList/DeviceList';
 import FormulaRatio from './pages/Demo/FormulaRatio/FormulaRatio';
+import FormulaRatioSync from './pages/Demo/FormulaRatioSync/FormulaRatioSync';
 import CaptureFormulaBackSide from './pages/Demo/FormulaRatio/CaptureFormulaBackSide/CaptureFormulaBackSide';
 import FeedingStats from './pages/FeedingStats/FeedingStats';
 import CaptureFormulaFront from './pages/Demo/FormulaRatio/CaptureFormulaFront/CaptureFormulaFront';
@@ -43,6 +44,7 @@ const RoutesComponent = () => {
           <Route index element={<DeviceList />} />
           <Route path="device" element={<BabyFormulaMaker />} />
           <Route path="formula-ratio" element={<FormulaRatio />} />
+          <Route path="formula-ratio-sync" element={<FormulaRatioSync />} />
           <Route path="scan-formula" element={<CaptureFormulaFront />} />
           <Route
             path="capture-formula-back-side"

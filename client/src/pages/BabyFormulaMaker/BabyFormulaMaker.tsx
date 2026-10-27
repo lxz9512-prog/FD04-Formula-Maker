@@ -29,7 +29,7 @@ import IPhoneFrame from '@client/src/components/IPhoneFrame';
 import { useDeviceData } from '@client/src/hooks/useDeviceData';
 import { useTranslation } from '@client/src/hooks/useTranslation';
 import { Image } from '@client/src/components/ui/image';
-import deviceImage from '@/assets/fd06-control-device.png';
+import deviceImage from '@/assets/fd04-device.png';
 import {
   formatVolumeFromMl,
   formatVolumeFromOz,
@@ -329,6 +329,9 @@ const BabyFormulaMaker: React.FC<BabyFormulaMakerProps> = ({
     language === 'zh'
       ? { low: '低', mid: '中', high: '高' }[waterLevel]
       : { low: 'Low', mid: 'Mid', high: 'High' }[waterLevel];
+  // The level is conveyed by colour only on the control surface; the wording lives in the tap detail.
+  const waterLevelColors = { low: '#D2382A', mid: '#C47910', high: '#1F63AC' };
+  const waterLevelColor = waterLevelColors[waterLevel];
   const resourceWarnings = getResourceWarnings(deviceData.waterAmount, deviceData.powderAmount, waterQualityLevel, mixingChamberCount);
   const showPowderCleanReminder =
     mixingChamberCount === 6 && dismissedChamberCount !== mixingChamberCount;
@@ -957,27 +960,22 @@ const BabyFormulaMaker: React.FC<BabyFormulaMakerProps> = ({
                         : '4px 4px 10px hsl(330 10% 85% / 0.3), -4px -4px 10px hsl(0 0% 100% / 0.8)',
                   }}
                 >
-                  <Droplets className="h-4 w-4" style={{ color: '#5B9BD5' }} />
+                  <Droplets className="h-4 w-4" style={{ color: waterLevelColor }} />
                   <span className="text-[9px]" style={{ color: '#999497' }}>
                     {t('maker.waterTank')}
                   </span>
                   <span
                     className="water-level-gauge"
                     role="img"
-                    aria-label={waterLevelLabel}
+                    aria-label={`${t('maker.waterTank')}: ${waterLevelLabel}`}
                   >
-                    {([
-                      ['low', language === 'zh' ? '低' : 'Low'],
-                      ['mid', language === 'zh' ? '中' : 'Mid'],
-                      ['high', language === 'zh' ? '高' : 'High'],
-                    ] as const).map(([key, label]) => (
+                    {(['low', 'mid', 'high'] as const).map((key) => (
                       <span
                         key={key}
                         className="water-level-seg"
+                        data-level={key}
                         data-active={waterLevel === key}
-                      >
-                        {label}
-                      </span>
+                      />
                     ))}
                   </span>
                 </motion.button>
@@ -1013,19 +1011,63 @@ const BabyFormulaMaker: React.FC<BabyFormulaMakerProps> = ({
                     }}
                   />
                   {showSimpleResourceTip && (
-                    <div className="water-tank-tip-content">
-                      {showSimpleChamberTip ? <SlidersHorizontal className="water-tank-tip-icon" size={22} strokeWidth={1.6} aria-hidden="true" /> : showSimpleQualityTip ? <Shield className="water-tank-tip-icon" size={22} strokeWidth={1.6} aria-hidden="true" /> : showSimpleFormulaTip ? <Milk className="water-tank-tip-icon" size={22} strokeWidth={1.6} aria-hidden="true" /> : <Droplets className="water-tank-tip-icon" size={22} strokeWidth={1.6} aria-hidden="true" />}
-                      <p>{showSimpleChamberTip
-                        ? (language === 'zh' ? '混合仓清洁后的使用次数（每调奶 8 次后请清洁）' : 'Number of uses after cleaning the mixing tank (clean after every 8 batches of formula)')
-                        : showSimpleFormulaTip
-                        ? (language === 'zh' ? '奶粉仓内剩余奶粉量' : 'Amount of Formula Remaining in the Powder Container')
-                        : showSimpleQualityTip
-                          ? (language === 'zh' ? '水箱内水质状态' : 'Water Quality Status in the Tank')
-                          : (language === 'zh' ? '水箱内剩余水量' : 'Remaining Water Level in the Tank')}</p>
-                      <button type="button" aria-label={language === 'zh' ? '关闭提示' : 'Close tip'} onClick={() => setResourcePopup(null)}>
-                        <X size={20} strokeWidth={1.5} />
-                      </button>
-                    </div>
+                    showSimpleWaterTip ? (
+                      <div className="water-level-tip">
+                        <div className="water-level-tip-head">
+                          <span className="water-level-tip-icon">
+                            <Droplets
+                              size={22}
+                              strokeWidth={1.6}
+                              style={{ color: waterLevelColor }}
+                              aria-hidden="true"
+                            />
+                          </span>
+                          <div className="water-level-tip-body">
+                            <p className="water-level-tip-title">
+                              {language === 'zh'
+                                ? `水箱水量：${waterLevelLabel}`
+                                : `Water level: ${waterLevelLabel}`}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            className="water-level-tip-close"
+                            aria-label={language === 'zh' ? '关闭提示' : 'Close tip'}
+                            onClick={() => setResourcePopup(null)}
+                          >
+                            <X size={20} strokeWidth={1.5} />
+                          </button>
+                        </div>
+                        <div className="water-level-legend">
+                          {(['low', 'mid', 'high'] as const).map((key) => (
+                            <span
+                              key={key}
+                              className="water-level-legend-item"
+                              data-active={waterLevel === key}
+                            >
+                              <i style={{ background: waterLevelColors[key] }} />
+                              {language === 'zh'
+                                ? { low: '低', mid: '中', high: '高' }[key]
+                                : { low: 'Low', mid: 'Mid', high: 'High' }[key]}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="water-tank-tip-content">
+                        {showSimpleChamberTip ? <SlidersHorizontal className="water-tank-tip-icon" size={22} strokeWidth={1.6} aria-hidden="true" /> : showSimpleQualityTip ? <Shield className="water-tank-tip-icon" size={22} strokeWidth={1.6} aria-hidden="true" /> : showSimpleFormulaTip ? <Milk className="water-tank-tip-icon" size={22} strokeWidth={1.6} aria-hidden="true" /> : <Droplets className="water-tank-tip-icon" size={22} strokeWidth={1.6} aria-hidden="true" />}
+                        <p>{showSimpleChamberTip
+                          ? (language === 'zh' ? '混合仓清洁后的使用次数（每调奶 8 次后请清洁）' : 'Number of uses after cleaning the mixing tank (clean after every 8 batches of formula)')
+                          : showSimpleFormulaTip
+                          ? (language === 'zh' ? '奶粉仓内剩余奶粉量' : 'Amount of Formula Remaining in the Powder Container')
+                          : showSimpleQualityTip
+                            ? (language === 'zh' ? '水箱内水质状态' : 'Water Quality Status in the Tank')
+                            : (language === 'zh' ? '水箱内剩余水量' : 'Remaining Water Level in the Tank')}</p>
+                        <button type="button" aria-label={language === 'zh' ? '关闭提示' : 'Close tip'} onClick={() => setResourcePopup(null)}>
+                          <X size={20} strokeWidth={1.5} />
+                        </button>
+                      </div>
+                    )
                   )}
                   {/* Legacy resource details remain available through the flags above. */}
                   <div hidden={showSimpleResourceTip}>

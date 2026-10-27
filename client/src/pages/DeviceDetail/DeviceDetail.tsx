@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Check, X } from 'lucide-react';
 import IPhoneFrame from '@client/src/components/IPhoneFrame';
 import { Image } from '@client/src/components/ui/image';
-import deviceImage from '@/assets/fd06-device.png';
+import deviceImage from '@/assets/fd04-device.png';
 import { useTranslation } from '@client/src/hooks/useTranslation';
 
 const DEVICE_THUMBNAIL = deviceImage;

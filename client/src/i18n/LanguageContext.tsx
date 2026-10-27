@@ -294,8 +294,14 @@ const translations: Record<string, Record<Language, string>> = {
     zh: '购买柠檬酸除垢剂',
     en: 'Shop Citric Acid Descaler',
   },
-  'cleaning.sinceLastClean': { zh: '距离上次清洁后', en: 'Since the last cleaning' },
-  'cleaning.bottlesMade': { zh: '已调奶{count}杯', en: '{count} bottles prepared' },
+  'cleaning.sinceLastClean': {
+    zh: '距离上次清洁后',
+    en: 'Since the last cleaning',
+  },
+  'cleaning.bottlesMade': {
+    zh: '已调奶{count}杯',
+    en: '{count} bottles prepared',
+  },
   'cleaning.selectMode': { zh: '选择清洁模式', en: 'Select a Cleaning Mode' },
   'cleaning.descalingDesc': {
     zh: '使用柠檬酸溶液去除管路水垢',
@@ -314,7 +320,10 @@ const translations: Record<string, Record<Language, string>> = {
     zh: '建议每调奶300杯之后进行一次除垢清洁',
     en: 'Descale after every 300 bottles prepared.',
   },
-  'cleaning.tip2': { zh: '建议每周进行一次高温杀菌', en: 'Run the high-temperature sanitizing cycle once a week.' },
+  'cleaning.tip2': {
+    zh: '建议每周进行一次高温杀菌',
+    en: 'Run the high-temperature sanitizing cycle once a week.',
+  },
   'cleaning.tip3': {
     zh: '清洁过程中请不要断开电源',
     en: 'Keep the device connected to power throughout the cleaning cycle.',
@@ -414,6 +423,21 @@ const translations: Record<string, Record<Language, string>> = {
     en: 'Sterilization complete, tubes fully sanitized',
   },
   'cleaning.backToSettings': { zh: '返回设置', en: 'Back to Settings' },
+  'cleaning.backToHome': { zh: '返回首页', en: 'Back to Home' },
+  'cleaning.startDescalingTitle': {
+    zh: '开始深度除垢？',
+    en: 'Start Deep Descaling?',
+  },
+  'cleaning.startDescalingNotice': {
+    zh: '深度清洁大约需要 15 分钟。开始后不能中止清洁，但仍可以使用 App 的其他功能。',
+    en: 'Deep cleaning takes about 15 minutes. Once started it cannot be stopped, but you can still use other app features.',
+  },
+  'cleaning.exitTitle': { zh: '退出清洁？', en: 'Exit Cleaning?' },
+  'cleaning.exitDesc': {
+    zh: '退出后将返回设备设置页面，当前清洁进度不会保留。',
+    en: 'You will return to device settings and the current progress will be lost.',
+  },
+  'cleaning.exitConfirm': { zh: '退出', en: 'Exit' },
 
   'cleaningIncomplete.title': {
     zh: '管路自清洁未完成',
@@ -500,7 +524,10 @@ const translations: Record<string, Record<Language, string>> = {
 
   // FAQList
   'faqList.title': { zh: '常见问题', en: 'FAQ' },
-  'faqList.mixingChamberCleaning': { zh: '如何清洗混合仓', en: 'How to Clean the Mixing Chamber' },
+  'faqList.mixingChamberCleaning': {
+    zh: '如何清洗混合仓',
+    en: 'How to Clean the Mixing Chamber',
+  },
   'faqList.powderOutputError': {
     zh: '调奶器出粉异常',
     en: 'Powder Output Error',
@@ -744,6 +771,57 @@ const translations: Record<string, Record<Language, string>> = {
   'demo.formulaRatio.scoopInfo': {
     zh: '1勺({scoopGrams}g)配{water}水',
     en: '1 scoop ({scoopGrams} g) per {water} of water',
+  },
+  // Demo - FormulaRatioSync
+  'demo.formulaRatioSync.title': { zh: '配比同步', en: 'Ratio Sync' },
+  'demo.formulaRatioSync.replay': { zh: '重新演示', en: 'Replay' },
+  'demo.formulaRatioSync.alertTitle': {
+    zh: '机器端配比已变更',
+    en: 'Ratio Changed on Device',
+  },
+  'demo.formulaRatioSync.alertDesc': {
+    zh: '检测到机器上已将粉水配比修改为',
+    en: 'The powder-water ratio on the device was changed to',
+  },
+  'demo.formulaRatioSync.alertQuestion': {
+    zh: '是否同步到 App 的粉水配比中？',
+    en: 'Sync it into a formula ratio in the app?',
+  },
+  'demo.formulaRatioSync.deviceLabel': {
+    zh: '机器端配比',
+    en: 'Device Ratio',
+  },
+  'demo.formulaRatioSync.pickAndSync': {
+    zh: '选择配比同步',
+    en: 'Choose a Ratio',
+  },
+  'demo.formulaRatioSync.ignore': {
+    zh: '忽略',
+    en: 'Ignore',
+  },
+  'demo.formulaRatioSync.pickTitle': {
+    zh: '选择要同步的配比',
+    en: 'Choose a Ratio to Sync',
+  },
+  'demo.formulaRatioSync.pickDesc': {
+    zh: '机器端配比将写入所选配比',
+    en: 'The device ratio will overwrite the selected ratio',
+  },
+  'demo.formulaRatioSync.confirmSync': {
+    zh: '确认同步',
+    en: 'Confirm Sync',
+  },
+  'demo.formulaRatioSync.addNew': {
+    zh: '新增',
+    en: 'Add',
+  },
+  'demo.formulaRatioSync.syncedCurrent': {
+    zh: '已同步到当前配比',
+    en: 'Synced to the current ratio',
+  },
+  'demo.formulaRatioSync.syncedOther': {
+    zh: '已同步到 {brand}',
+    en: 'Synced to {brand}',
   },
   'demo.formulaEdit.title': {
     zh: '识别结果确认',

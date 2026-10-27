@@ -25,10 +25,26 @@
 .control-device { height: 186px; width: 181px; background: none; }
 .control-resources { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 300px; gap: 12px; margin: 9px auto 0; padding-inline: 8px; color: #696764; }
 .control-resources--single { justify-content: center; }
-/* Water tank level: 3 horizontal steps, the active step marks the current level. */
+/* Water tank level: colour-only 3-step meter, the filled/active bar marks the current level. */
 .control-resources .water-level-gauge { display: flex; align-items: center; gap: 3px; }
-.control-resources .water-level-gauge > .water-level-seg { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 18px; padding: 0 6px; border-radius: 6px; background: #efeced; color: #8d858a; font-size: 10px; font-weight: 500; line-height: 1; }
-.control-resources .water-level-gauge > .water-level-seg[data-active='true'] { background: #5B9BD5; color: #ffffff; font-weight: 600; }
+.control-resources .water-level-gauge > .water-level-seg { display: inline-block; width: 15px; height: 5px; border-radius: 3px; opacity: 0.38; transition: opacity 0.2s ease, height 0.2s ease; }
+.control-resources .water-level-gauge > .water-level-seg[data-level='low'] { background: #D2382A; }
+.control-resources .water-level-gauge > .water-level-seg[data-level='mid'] { background: #C47910; }
+.control-resources .water-level-gauge > .water-level-seg[data-level='high'] { background: #1F63AC; }
+.control-resources .water-level-gauge > .water-level-seg[data-active='true'] { opacity: 1; height: 7px; }
+/* Level explanation shown inside the tap detail panel. */
+.water-level-tip { display: flex; flex-direction: column; gap: 7px; width: 100%; }
+.water-level-tip-head { display: flex; align-items: center; gap: 10px; }
+.water-level-tip-icon { display: flex; align-items: center; justify-content: center; flex: 0 0 auto; width: 22px; height: 22px; color: inherit; }
+.water-level-tip-body { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; }
+.water-level-tip-title { margin: 0; font-size: 12px; font-weight: 600; color: #242424; }
+.water-level-tip-close { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 28px; height: 22px; padding: 0; border: 0; background: transparent; color: #a49ca1; }
+/* Legend sits under the title text, aligned to the same left edge. */
+.water-level-legend { display: flex; align-items: center; gap: 10px; padding-left: 32px; }
+.water-level-legend-item { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: #a8a1a5; }
+.water-level-legend-item > i { display: inline-block; width: 12px; height: 4px; border-radius: 2px; opacity: 1; }
+.water-level-legend-item[data-active='true'] { color: #221122; font-weight: 600; }
+.water-level-legend-item[data-active='true'] > i { opacity: 1; height: 6px; }
 .control-resources > * { flex: 0 0 auto; }
 .resource-water { order: 0; }
 .resource-formula { order: 1; }

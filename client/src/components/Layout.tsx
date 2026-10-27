@@ -86,6 +86,11 @@ const navItems: NavItem[] = [
         label: '管路清洁提醒',
         icon: <AlertTriangle className="h-3.5 w-3.5" />,
       },
+      {
+        path: '/formula-ratio-sync',
+        label: '配比同步异常',
+        icon: <AlertTriangle className="h-3.5 w-3.5" />,
+      },
     ],
   },
   {
