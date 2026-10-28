@@ -106,5 +106,11 @@
   },
   {
     "path": "/tube-clean-reminder"
+  },
+  {
+    "path": "/no-baby"
+  },
+  {
+    "path": "/add-baby"
   }
 ]
